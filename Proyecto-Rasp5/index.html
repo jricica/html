@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Player</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #141414;
+      color: #fff;
+    }
+    header {
+      background-color: #000;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+      background: url('hero-background.jpg') no-repeat center center/cover;
+    }
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+    .hero button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #e50914;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .hero button:hover {
+      background-color: #f40612;
+    }
+    .section {
+      padding: 40px 20px;
+    }
+    .section h3 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background-color: #222;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .card h4 {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Media Player</h1>
+    <nav>
+      <a href="#musica">Música</a>
+      <a href="#juegos">Juegos</a>
+      <a href="#peliculas">Películas</a>
+    </nav>
+  </header>
+  <div class="hero">
+    <h2>Bienvenido a Media Player</h2>
+    <p>Explora música, juegos y películas en un solo lugar.</p>
+    <button>Comenzar</button>
+  </div>
+  <div class="section" id="musica">
+    <h3>Música</h3>
+    <div class="grid">
+      <div class="card">
+        <img src="music1.jpg" alt="Álbum 1">
+        <h4>Álbum 1</h4>
+      </div>
+      <div class="card">
+        <img src="music2.jpg" alt="Álbum 2">
+        <h4>Álbum 2</h4>
+      </div>
+      <div class="card">
+        <img src="music3.jpg" alt="Álbum 3">
+        <h4>Álbum 3</h4>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="juegos">
+    <h3>Juegos</h3>
+    <div class="grid">
+      <div class="card">
+        <img src="game1.jpg" alt="Juego 1">
+        <h4>Juego 1</h4>
+      </div>
+      <div class="card">
+        <img src="game2.jpg" alt="Juego 2">
+        <h4>Juego 2</h4>
+      </div>
+      <div class="card">
+        <img src="game3.jpg" alt="Juego 3">
+        <h4>Juego 3</h4>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="peliculas">
+    <h3>Películas</h3>
+    <div class="grid">
+      <div class="card">
+        <img src="movie1.jpg" alt="Película 1">
+        <h4>Película 1</h4>
+      </div>
+      <div class="card">
+        <img src="movie2.jpg" alt="Película 2">
+        <h4>Película 2</h4>
+      </div>
+      <div class="card">
+        <img src="movie3.jpg" alt="Película 3">
+        <h4>Película 3</h4>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
