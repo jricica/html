@@ -11,6 +11,7 @@
       --accent: #e50914;
       --text-light: #f0f0f0;
       --text-muted: #aaa;
+      --nav-bg: #1a1b2c;
     }
     body {
       margin: 0;
@@ -19,48 +20,79 @@
       color: var(--text-light);
     }
     header {
-      background: var(--main-bg);
-      padding: 1.5rem;
-      text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
+      background: var(--nav-bg);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    nav {
+      display: flex;
+      gap: 1rem;
+    }
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: var(--accent);
     }
     .hero {
       background: linear-gradient(to top, #111 60%, transparent);
-      padding: 4rem 2rem;
-      color: white;
+      padding: 6rem 2rem 4rem;
       text-align: center;
+      color: white;
     }
     .hero h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
     }
     .hero p {
       max-width: 600px;
+      margin: 0 auto 2rem;
       color: var(--text-muted);
-      margin: 0 auto 1.5rem;
     }
     .hero button {
       background: var(--accent);
       color: white;
-      padding: 0.7em 1.5em;
+      padding: 0.8em 2em;
       border: none;
       border-radius: 5px;
       font-weight: bold;
       cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    .hero button:hover {
+      background: #b00710;
     }
     .search-bar {
       display: flex;
       justify-content: center;
-      padding: 1rem;
+      padding: 1.5rem;
+      margin-top: -2rem;
     }
     .search-bar input {
-      padding: 0.7em;
+      padding: 0.8em;
       width: 60%;
       border: none;
       border-radius: 8px;
       background: #1a1b2c;
       color: white;
+      font-size: 1rem;
     }
     .tabs {
       display: flex;
@@ -69,21 +101,28 @@
       padding: 1rem 0;
     }
     .tabs button {
-      padding: 0.5em 1em;
+      padding: 0.7em 1.5em;
       border: none;
       background: #2a2b3d;
       color: white;
       border-radius: 20px;
       cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
     }
     .tabs .active {
       background: var(--accent);
     }
+    .tabs button:hover {
+      background: var(--accent);
+    }
     .section {
-      padding: 1.5rem;
+      padding: 2rem;
     }
     .section h2 {
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 2rem;
     }
     .carousel {
       display: flex;
@@ -98,12 +137,13 @@
       overflow: hidden;
       min-width: 300px;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      transition: transform 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
       scroll-snap-align: start;
     }
     .card:hover {
-      transform: scale(1.03);
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
     }
     .card video {
       width: 100%;
@@ -114,40 +154,68 @@
       padding: 1rem;
     }
     .genre {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       background: #333;
       display: inline-block;
-      padding: 0.2em 0.6em;
+      padding: 0.3em 0.8em;
       border-radius: 5px;
       margin-bottom: 0.5em;
     }
     .title {
       font-weight: bold;
-      margin-bottom: 0.3em;
+      margin-bottom: 0.5em;
+      font-size: 1.1rem;
     }
     .rating {
       color: gold;
-      font-size: 0.9em;
-      margin-bottom: 0.8em;
+      font-size: 1rem;
+      margin-bottom: 1em;
     }
     .desc {
-      font-size: 0.8em;
+      font-size: 0.9rem;
       color: var(--text-muted);
-      margin-bottom: 0.5em;
+      margin-bottom: 1em;
     }
     .details-btn {
       background: none;
       border: 1px solid var(--accent);
       color: var(--accent);
-      padding: 0.3em 1em;
+      padding: 0.5em 1.2em;
       border-radius: 5px;
-      font-size: 0.8em;
+      font-size: 0.9rem;
       cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .details-btn:hover {
+      background: var(--accent);
+      color: white;
+    }
+    footer {
+      background: var(--nav-bg);
+      color: var(--text-muted);
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <header>Mi Media Center</header>
+  <header>
+    <h1>Mi Media Center</h1>
+    <nav>
+      <a href="/juegos.html">Juegos</a>
+      <a href="/peliculas.html">Películas</a>
+      <a href="/series.html">Series</a>
+      <a href="/favoritos.html">Favoritos</a>
+    </nav>
+  </header>
 
   <div class="hero">
     <h1>The Last of Us</h1>
@@ -166,7 +234,7 @@
     <button onclick="setActiveTab(this)">❤️ Favoritos</button>
   </div>
 
-  <div class="section">
+  <div class="section" id="juegos">
     <h2>Juegos Populares</h2>
     <div class="carousel">
       <div class="card">
@@ -179,38 +247,13 @@
           <button class="details-btn" onclick="alert('Detalles de Cyberpunk 2077')">Detalles</button>
         </div>
       </div>
-      <div class="card">
-        <video src="media/zelda.mp4" controls></video>
-        <div class="card-content">
-          <div class="genre">Aventura</div>
-          <div class="title">The Legend of Zelda</div>
-          <div class="rating">⭐ 5</div>
-          <div class="desc">Link debe salvar el reino de Hyrule y rescatar a la princesa Zelda.</div>
-          <button class="details-btn" onclick="alert('Detalles de Zelda')">Detalles</button>
-        </div>
-      </div>
-      <div class="card">
-        <video src="media/cod.mp4" controls></video>
-        <div class="card-content">
-          <div class="genre">FPS</div>
-          <div class="title">Call of Duty: Modern Warfare</div>
-          <div class="rating">⭐ 4.2</div>
-          <div class="desc">Shooter en primera persona con campaña intensa y modo multijugador.</div>
-          <button class="details-btn" onclick="alert('Detalles de Call of Duty')">Detalles</button>
-        </div>
-      </div>
-      <div class="card">
-        <video src="media/fifa.mp4" controls></video>
-        <div class="card-content">
-          <div class="genre">Deportes</div>
-          <div class="title">FIFA 2023</div>
-          <div class="rating">⭐ 4.0</div>
-          <div class="desc">El simulador de fútbol más realista con licencias oficiales.</div>
-          <button class="details-btn" onclick="alert('Detalles de FIFA 2023')">Detalles</button>
-        </div>
-      </div>
+      <!-- Más tarjetas aquí -->
     </div>
   </div>
+
+  <footer>
+    <p>&copy; 2023 Mi Media Center. Todos los derechos reservados. | <a href="#">Política de privacidad</a></p>
+  </footer>
 
   <script>
     function setActiveTab(button) {
