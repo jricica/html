@@ -208,7 +208,7 @@
 </head>
 <body>
   <header>
-    <h1>Mi Media Center</h1>
+    <h1>Raspen</h1>
     <nav>
       <a href="/juegos.html">Juegos</a>
       <a href="/peliculas.html">Películas</a>
@@ -228,10 +228,10 @@
   </div>
 
   <div class="tabs">
-    <button class="active" onclick="setActiveTab(this)">🎮 Juegos</button>
-    <button onclick="setActiveTab(this)">🎬 Películas</button>
-    <button onclick="setActiveTab(this)">📺 Series</button>
-    <button onclick="setActiveTab(this)">❤️ Favoritos</button>
+    <button class="active" onclick="setActiveTab(this); window.location.href='/juegos.html';">🎮 Juegos</button>
+    <button onclick="setActiveTab(this); window.location.href='/peliculas.html';">🎬 Películas</button>
+    <button onclick="setActiveTab(this); window.location.href='/series.html';">📺 Series</button>
+    <button onclick="setActiveTab(this); window.location.href='/favoritos.html';">❤️ Favoritos</button>
   </div>
 
   <div class="section" id="juegos">

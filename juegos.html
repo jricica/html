@@ -6,120 +6,136 @@
     <title>Juegos</title>
     <style>
         :root {
-            --main-bg: #1e3c72;
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --accent: #2a5298;
-            --text-light: #fff;
-            --text-muted: rgba(255, 255, 255, 0.7);
-            --nav-bg: #1e3c72;
+            --main-bg: #0b0c1a;
+            --card-bg: #1e1f2f;
+            --accent: #e50914;
+            --text-light: #f0f0f0;
+            --text-muted: #aaa;
+            --nav-bg: #1a1b2c;
         }
 
         body {
             margin: 0;
             background: var(--main-bg);
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-light);
         }
 
         header {
             background: var(--nav-bg);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 1.5rem;
         }
 
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0 0;
+        nav {
             display: flex;
-            justify-content: center;
-            gap: 20px;
+            gap: 1rem;
         }
 
-        nav ul li a {
-            text-decoration: none;
+        nav a {
             color: var(--text-light);
-            font-weight: bold;
-            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
             border-radius: 5px;
             transition: background 0.3s;
         }
 
-        nav ul li a.active, nav ul li a:hover {
+        nav a.active, nav a:hover {
             background: var(--accent);
         }
 
         main {
-            padding: 40px 20px;
+            padding: 6rem 2rem 2rem;
             text-align: center;
         }
 
         main h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
         }
 
-        main ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        main ul li {
+        .card {
             background: var(--card-bg);
-            margin: 10px auto;
-            padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
+            overflow: hidden;
             max-width: 300px;
-            transition: transform 0.3s, background 0.3s;
+            margin: 1rem auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        main ul li:hover {
+        .card:hover {
             transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        .title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            font-size: 1.1rem;
         }
 
         footer {
             background: var(--nav-bg);
+            color: var(--text-muted);
             text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            margin-top: 2rem;
         }
 
-        footer p {
-            margin: 0;
-            font-size: 0.9em;
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Bienvenido a la página de Juegos</h1>
+        <h1>Juegos</h1>
         <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="juegos.html" class="active">Juegos</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
+            <a href="index.html">Inicio</a>
+            <a href="juegos.html" class="active">Juegos</a>
+            <a href="contacto.html">Contacto</a>
         </nav>
     </header>
     <main>
-        <section>
-            <h2>Lista de Juegos</h2>
-            <ul>
-                <li>Juego 1</li>
-                <li>Juego 2</li>
-                <li>Juego 3</li>
-            </ul>
-        </section>
+        <h2>Lista de Juegos</h2>
+        <div class="card">
+            <div class="card-content">
+                <div class="title">Juego 1</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="title">Juego 2</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="title">Juego 3</div>
+            </div>
+        </div>
     </main>
     <footer>
         <p>&copy; 2023 Proyecto Rasp5. Todos los derechos reservados.</p>
