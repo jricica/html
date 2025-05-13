@@ -3,150 +3,221 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Media Player</title>
+  <title>Mi Media Center</title>
   <style>
+    :root {
+      --main-bg: #0b0c1a;
+      --card-bg: #1e1f2f;
+      --accent: #e50914;
+      --text-light: #f0f0f0;
+      --text-muted: #aaa;
+    }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #141414;
-      color: #fff;
+      background: var(--main-bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-light);
     }
     header {
-      background-color: #000;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 15px;
-      font-size: 18px;
-    }
-    nav a:hover {
-      text-decoration: underline;
+      background: var(--main-bg);
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
     }
     .hero {
+      background: linear-gradient(to top, #111 60%, transparent);
+      padding: 4rem 2rem;
+      color: white;
       text-align: center;
-      padding: 50px 20px;
-      background: url('hero-background.jpg') no-repeat center center/cover;
     }
-    .hero h2 {
-      font-size: 36px;
-      margin-bottom: 20px;
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
     }
     .hero p {
-      font-size: 18px;
-      margin-bottom: 30px;
+      max-width: 600px;
+      color: var(--text-muted);
+      margin: 0 auto 1.5rem;
     }
     .hero button {
-      padding: 10px 20px;
-      font-size: 18px;
-      background-color: #e50914;
-      color: #fff;
+      background: var(--accent);
+      color: white;
+      padding: 0.7em 1.5em;
       border: none;
+      border-radius: 5px;
+      font-weight: bold;
       cursor: pointer;
     }
-    .hero button:hover {
-      background-color: #f40612;
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .search-bar input {
+      padding: 0.7em;
+      width: 60%;
+      border: none;
+      border-radius: 8px;
+      background: #1a1b2c;
+      color: white;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem 0;
+    }
+    .tabs button {
+      padding: 0.5em 1em;
+      border: none;
+      background: #2a2b3d;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .tabs .active {
+      background: var(--accent);
     }
     .section {
-      padding: 40px 20px;
+      padding: 1.5rem;
     }
-    .section h3 {
-      font-size: 28px;
-      margin-bottom: 20px;
+    .section h2 {
+      margin-bottom: 1rem;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+    .carousel {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      scroll-snap-type: x mandatory;
     }
     .card {
-      background-color: #222;
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      min-width: 300px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.3s;
+      scroll-snap-align: start;
     }
-    .card img {
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .card video {
       width: 100%;
-      border-radius: 8px;
+      height: 180px;
+      object-fit: cover;
     }
-    .card h4 {
-      margin: 10px 0;
-      font-size: 18px;
+    .card-content {
+      padding: 1rem;
+    }
+    .genre {
+      font-size: 0.75rem;
+      background: #333;
+      display: inline-block;
+      padding: 0.2em 0.6em;
+      border-radius: 5px;
+      margin-bottom: 0.5em;
+    }
+    .title {
+      font-weight: bold;
+      margin-bottom: 0.3em;
+    }
+    .rating {
+      color: gold;
+      font-size: 0.9em;
+      margin-bottom: 0.8em;
+    }
+    .desc {
+      font-size: 0.8em;
+      color: var(--text-muted);
+      margin-bottom: 0.5em;
+    }
+    .details-btn {
+      background: none;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 0.3em 1em;
+      border-radius: 5px;
+      font-size: 0.8em;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Media Player</h1>
-    <nav>
-      <a href="#musica">Música</a>
-      <a href="#juegos">Juegos</a>
-      <a href="#peliculas">Películas</a>
-    </nav>
-  </header>
+  <header>Mi Media Center</header>
+
   <div class="hero">
-    <h2>Bienvenido a Media Player</h2>
-    <p>Explora música, juegos y películas en un solo lugar.</p>
-    <button>Comenzar</button>
+    <h1>The Last of Us</h1>
+    <p>Veinte años después de que la civilización moderna fuera destruida, Joel es contratado para sacar de contrabando a Ellie, una niña de 14 años, fuera de una opresiva zona de cuarentena.</p>
+    <button onclick="alert('Reproduciendo The Last of Us')">▶ Ver ahora</button>
   </div>
-  <div class="section" id="musica">
-    <h3>Música</h3>
-    <div class="grid">
+
+  <div class="search-bar">
+    <input type="text" placeholder="🔍 Buscar Juegos, Películas o Series...">
+  </div>
+
+  <div class="tabs">
+    <button class="active" onclick="setActiveTab(this)">🎮 Juegos</button>
+    <button onclick="setActiveTab(this)">🎬 Películas</button>
+    <button onclick="setActiveTab(this)">📺 Series</button>
+    <button onclick="setActiveTab(this)">❤️ Favoritos</button>
+  </div>
+
+  <div class="section">
+    <h2>Juegos Populares</h2>
+    <div class="carousel">
       <div class="card">
-        <img src="music1.jpg" alt="Álbum 1">
-        <h4>Álbum 1</h4>
+        <video src="media/cyberpunk.mp4" controls></video>
+        <div class="card-content">
+          <div class="genre">RPG</div>
+          <div class="title">Cyberpunk 2077</div>
+          <div class="rating">⭐ 4.5</div>
+          <div class="desc">Un juego de rol de acción en primera persona ambientado en un futuro distópico.</div>
+          <button class="details-btn" onclick="alert('Detalles de Cyberpunk 2077')">Detalles</button>
+        </div>
       </div>
       <div class="card">
-        <img src="music2.jpg" alt="Álbum 2">
-        <h4>Álbum 2</h4>
+        <video src="media/zelda.mp4" controls></video>
+        <div class="card-content">
+          <div class="genre">Aventura</div>
+          <div class="title">The Legend of Zelda</div>
+          <div class="rating">⭐ 5</div>
+          <div class="desc">Link debe salvar el reino de Hyrule y rescatar a la princesa Zelda.</div>
+          <button class="details-btn" onclick="alert('Detalles de Zelda')">Detalles</button>
+        </div>
       </div>
       <div class="card">
-        <img src="music3.jpg" alt="Álbum 3">
-        <h4>Álbum 3</h4>
+        <video src="media/cod.mp4" controls></video>
+        <div class="card-content">
+          <div class="genre">FPS</div>
+          <div class="title">Call of Duty: Modern Warfare</div>
+          <div class="rating">⭐ 4.2</div>
+          <div class="desc">Shooter en primera persona con campaña intensa y modo multijugador.</div>
+          <button class="details-btn" onclick="alert('Detalles de Call of Duty')">Detalles</button>
+        </div>
+      </div>
+      <div class="card">
+        <video src="media/fifa.mp4" controls></video>
+        <div class="card-content">
+          <div class="genre">Deportes</div>
+          <div class="title">FIFA 2023</div>
+          <div class="rating">⭐ 4.0</div>
+          <div class="desc">El simulador de fútbol más realista con licencias oficiales.</div>
+          <button class="details-btn" onclick="alert('Detalles de FIFA 2023')">Detalles</button>
+        </div>
       </div>
     </div>
   </div>
-  <div class="section" id="juegos">
-    <h3>Juegos</h3>
-    <div class="grid">
-      <div class="card">
-        <img src="game1.jpg" alt="Juego 1">
-        <h4>Juego 1</h4>
-      </div>
-      <div class="card">
-        <img src="game2.jpg" alt="Juego 2">
-        <h4>Juego 2</h4>
-      </div>
-      <div class="card">
-        <img src="game3.jpg" alt="Juego 3">
-        <h4>Juego 3</h4>
-      </div>
-    </div>
-  </div>
-  <div class="section" id="peliculas">
-    <h3>Películas</h3>
-    <div class="grid">
-      <div class="card">
-        <img src="movie1.jpg" alt="Película 1">
-        <h4>Película 1</h4>
-      </div>
-      <div class="card">
-        <img src="movie2.jpg" alt="Película 2">
-        <h4>Película 2</h4>
-      </div>
-      <div class="card">
-        <img src="movie3.jpg" alt="Película 3">
-        <h4>Película 3</h4>
-      </div>
-    </div>
-  </div>
+
+  <script>
+    function setActiveTab(button) {
+      document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      alert('Has seleccionado: ' + button.textContent.trim());
+    }
+  </script>
 </body>
 </html>
