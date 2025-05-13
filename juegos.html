@@ -4,7 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juegos</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --main-bg: #1e3c72;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --accent: #2a5298;
+            --text-light: #fff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --nav-bg: #1e3c72;
+        }
+
+        body {
+            margin: 0;
+            background: var(--main-bg);
+            font-family: Arial, sans-serif;
+            color: var(--text-light);
+        }
+
+        header {
+            background: var(--nav-bg);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a.active, nav ul li a:hover {
+            background: var(--accent);
+        }
+
+        main {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        main h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        main ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        main ul li {
+            background: var(--card-bg);
+            margin: 10px auto;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 300px;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        main ul li:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        footer {
+            background: var(--nav-bg);
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
     <header>
