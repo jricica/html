@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Configurar DOOM</title>
+  <script src="js-dos/js-dos.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    .container {
+      display: flex;
+      flex-direction: row; 
+      justify-content: center;
+      align-items: center;
+    }
+    canvas {
+      border: 2px solid white;
+      margin-right: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .instructions {
+      font-size: 16px;
+      width: 300px;
+    }
+    .instructions h3 {
+      margin-bottom: 10px;
+    }
+    .instructions ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Contenedor para el juego y las instrucciones -->
+  <div class="container">
+    <canvas id="jsdos"></canvas>
+
+    <div class="instructions">
+      <h3>Instrucciones para configurar el sonido en DOOM:</h3>
+      <p>Una vez que el juego se haya iniciado:</p>
+      <ul>
+        <li>1. keyboard only</li>
+        <li>2. sound Blaster</li>
+        <li>3. 220</li>
+        <li>4. Sound blaster</li>
+        <li>5. 220</li>
+        <li>6. 7</li>
+        <li>7. 1</li>
+        <li>8. 3</li>
+        <li>Save parameters and launch DOOM</li>
+      </ul>
+      <p>¡Disfruta del juego!</p>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <button id="startButton">Abrir DOOM</button>
+  <button id="fullscreenButton">Pantalla Completa</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const canvas = document.getElementById('jsdos');
+      const startButton = document.getElementById('startButton');
+      const fullscreenButton = document.getElementById('fullscreenButton');
+
+      const dosInstance = Dos(canvas, {
+        wdosboxUrl: 'js-dos/wdosbox.js'
+      });
+
+      function goFullScreen() {
+        if (canvas.requestFullscreen) {
+          canvas.requestFullscreen();
+        } else if (canvas.mozRequestFullScreen) {
+          canvas.mozRequestFullScreen();
+        } else if (canvas.webkitRequestFullscreen) {
+          canvas.webkitRequestFullscreen();
+        } else if (canvas.msRequestFullscreen) {
+          canvas.msRequestFullscreen();
+        }
+      }
+
+      startButton.addEventListener('click', function () {
+        dosInstance.ready((fs, main) => {
+          fs.extract('doom.jsdos.zip').then(() => {
+            main(['-c', 'mount c .', '-c', 'c:', '-c', 'cd drive_c', '-c', 'setup']);
+          }).catch((error) => {
+            console.error('Error al extraer el archivo ZIP:', error);
+          });
+        });
+      });
+
+      fullscreenButton.addEventListener('click', goFullScreen);
+    });
+  </script>
+</body>
+</html>
