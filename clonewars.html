@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clone Wars T7 | Raspen Series</title>
+    <style>
+        :root {
+            --main-bg: #0b0c1a;
+            --card-bg: #1e1f2f;
+            --accent: #e50914;
+            --text-light: #f0f0f0;
+            --text-muted: #aaa;
+            --nav-bg: #1a1b2c;
+        }
+        body {
+            margin: 0;
+            background: var(--main-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-light);
+        }
+        header {
+            background: var(--nav-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        nav {
+            display: flex;
+            gap: 1rem;
+        }
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        nav a.active, nav a:hover {
+            background: var(--accent);
+        }
+        .section {
+            padding: 2rem;
+            margin-top: 5.5rem;
+        }
+        .section h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+        .carousel {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            min-width: 300px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+        }
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #222;
+        }
+        .card-content {
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .genre {
+            font-size: 0.8rem;
+            background: #333;
+            display: inline-block;
+            padding: 0.3em 0.8em;
+            border-radius: 5px;
+            margin-bottom: 0.5em;
+        }
+        .title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            font-size: 1.1rem;
+        }
+        .desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1em;
+        }
+        .details-btn {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.5em 1.2em;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            align-self: flex-start;
+        }
+        .details-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 12px;
+            max-width: 90vw;
+            max-height: 90vh;
+            padding: 1rem;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .modal-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        .modal-title {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        .modal-video {
+            width: 80vw;
+            max-width: 720px;
+            height: 45vw;
+            max-height: 405px;
+            background: #000;
+            border-radius: 8px;
+        }
+        @media (max-width: 700px) {
+            .carousel { gap: 0.5rem; }
+            .card { min-width: 220px; }
+            .section { padding: 1rem; }
+            .modal-video {
+                width: 98vw;
+                height: 56vw;
+                max-width: 98vw;
+                max-height: 56vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="margin: left;">Raspen Series</h1>
+        <nav style="margin: 0 auto; position: static; display: flex; justify-content: center; align-items: center; width: 100%;">
+            <a href="#" class="active">Clone Wars T7</a>
+            <a href="#">Inicio</a>
+            <a href="#">Películas</a>
+        </nav>
+    </header>
+    <main>
+        <section class="section">
+            <h2>Star Wars: The Clone Wars - Temporada 7</h2>
+            <div class="carousel" id="episodes-carousel">
+                <!-- Episodios se insertan por JS -->
+            </div>
+        </section>
+    </main>
+    <!-- Modal -->
+    <div class="modal" id="episode-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="close-modal">&times;</button>
+            <div class="modal-title" id="modal-title"></div>
+            <video class="modal-video" id="modal-video" controls poster="">
+                <source id="modal-source" src="" type="video/mp4">
+                Tu navegador no soporta el video.
+            </video>
+        </div>
+    </div>
+    <script>
+        // Datos de los episodios (puedes cambiar los links y posters)
+        const episodes = [
+            {
+                title: "Episodio 1: The Bad Batch",
+                desc: "Un escuadrón de clones poco convencional ayuda a Rex a descubrir un secreto.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/2/2e/The_Bad_Batch_TCW.png",
+                video: "https://www.w3schools.com/html/mov_bbb.mp4"
+            },
+            {
+                title: "Episodio 2: A Distant Echo",
+                desc: "Rex, Anakin y el Bad Batch buscan a Echo en Skako Minor.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/7/7d/A_Distant_Echo_TCW.png",
+                video: "https://www.w3schools.com/html/movie.mp4"
+            },
+            {
+                title: "Episodio 3: On the Wings of Keeradaks",
+                desc: "El equipo escapa de Skako Minor con Echo.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/6/6e/On_the_Wings_of_Keeradaks_TCW.png",
+                video: "https://www.w3schools.com/html/mov_bbb.mp4"
+            },
+            {
+                title: "Episodio 4: Unfinished Business",
+                desc: "Echo ayuda a los clones a atacar a los separatistas.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/2/2c/Unfinished_Business_TCW.png",
+                video: "https://www.w3schools.com/html/movie.mp4"
+            },
+            {
+                title: "Episodio 5: Gone with a Trace",
+                desc: "Ahsoka conoce a Trace Martez en Coruscant.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/7/7e/Gone_with_a_Trace_TCW.png",
+                video: "https://www.w3schools.com/html/mov_bbb.mp4"
+            },
+            {
+                title: "Episodio 6: Deal No Deal",
+                desc: "Ahsoka y las hermanas Martez aceptan un trabajo peligroso.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/7/7e/Deal_No_Deal_TCW.png",
+                video: "https://www.w3schools.com/html/movie.mp4"
+            },
+            {
+                title: "Episodio 7: Dangerous Debt",
+                desc: "Ahsoka y las Martez intentan escapar de los Pyke.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/2/2e/Dangerous_Debt_TCW.png",
+                video: "https://www.w3schools.com/html/mov_bbb.mp4"
+            },
+            {
+                title: "Episodio 8: Together Again",
+                desc: "Ahsoka idea un plan para liberar a las Martez.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/3/3e/Together_Again_TCW.png",
+                video: "https://www.w3schools.com/html/movie.mp4"
+            },
+            {
+                title: "Episodio 9: Old Friends Not Forgotten",
+                desc: "Ahsoka se reúne con Anakin y Obi-Wan.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/2/2e/Old_Friends_Not_Forgotten_TCW.png",
+                video: "https://www.w3schools.com/html/mov_bbb.mp4"
+            },
+            {
+                title: "Episodio 10: The Phantom Apprentice",
+                desc: "Ahsoka enfrenta a Maul en Mandalore.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/7/7e/The_Phantom_Apprentice_TCW.png",
+                video: "https://www.w3schools.com/html/movie.mp4"
+            },
+            {
+                title: "Episodio 11: Shattered",
+                desc: "La Orden 66 es ejecutada durante el regreso de Ahsoka.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/2/2e/Shattered_TCW.png",
+                video: "https://www.w3schools.com/html/mov_bbb.mp4"
+            },
+            {
+                title: "Episodio 12: Victory and Death",
+                desc: "Ahsoka y Rex luchan por sobrevivir tras la Orden 66.",
+                img: "https://static.wikia.nocookie.net/esstarwars/images/2/2e/Victory_and_Death_TCW.png",
+                video: "https://www.w3schools.com/html/movie.mp4"
+            }
+        ];
+
+        // Renderizar episodios
+        const carousel = document.getElementById('episodes-carousel');
+        episodes.forEach((ep, idx) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <img src="${ep.img}" alt="${ep.title}">
+                <div class="card-content">
+                    <span class="genre">Animación</span>
+                    <div class="title">${ep.title}</div>
+                    <div class="desc">${ep.desc}</div>
+                    <button class="details-btn" data-idx="${idx}">Ver episodio</button>
+                </div>
+            `;
+            carousel.appendChild(card);
+        });
+
+        // Modal lógica
+        const modal = document.getElementById('episode-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalVideo = document.getElementById('modal-video');
+        const modalSource = document.getElementById('modal-source');
+        const closeModal = document.getElementById('close-modal');
+
+        carousel.addEventListener('click', function(e) {
+            if (e.target.classList.contains('details-btn')) {
+                const idx = e.target.getAttribute('data-idx');
+                const ep = episodes[idx];
+                modalTitle.textContent = ep.title;
+                modalVideo.poster = ep.img;
+                modalSource.src = ep.video;
+                modalVideo.load();
+                modal.classList.add('active');
+            }
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.classList.remove('active');
+            modalVideo.pause();
+            modalVideo.currentTime = 0;
+        });
+
+        // Cerrar modal al hacer click fuera del contenido
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                modalVideo.pause();
+                modalVideo.currentTime = 0;
+            }
+        });
+
+        // Cerrar con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape" && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                modalVideo.pause();
+                modalVideo.currentTime = 0;
+            }
+        });
+    </script>
+</body>
+</html>
