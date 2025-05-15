@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raspen Series</title>
+    <style>
+        :root {
+            --main-bg: #0b0c1a;
+            --card-bg: #1e1f2f;
+            --accent: #e50914;
+            --text-light: #f0f0f0;
+            --text-muted: #aaa;
+            --nav-bg: #1a1b2c;
+        }
+        body {
+            margin: 0;
+            background: var(--main-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-light);
+        }
+        header {
+            background: var(--nav-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        nav {
+            display: flex;
+            gap: 1rem;
+        }
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        nav a.active, nav a:hover {
+            background: var(--accent);
+        }
+        .hero {
+            background: linear-gradient(to top, #111 60%, transparent);
+            padding: 7rem 2rem 3rem;
+            text-align: center;
+            color: white;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: var(--text-muted);
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem;
+            margin-top: -2rem;
+        }
+        .search-bar input {
+            padding: 0.8em;
+            width: 60%;
+            border: none;
+            border-radius: 8px;
+            background: #1a1b2c;
+            color: white;
+            font-size: 1rem;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+        .tabs button {
+            padding: 0.7em 1.5em;
+            border: none;
+            background: #2a2b3d;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .tabs .active {
+            background: var(--accent);
+        }
+        .tabs button:hover {
+            background: var(--accent);
+        }
+        .section {
+            padding: 2rem;
+        }
+        .section h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+        .carousel {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            min-width: 300px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+        }
+        .card img, .card video {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #222;
+        }
+        .card-content {
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .genre {
+            font-size: 0.8rem;
+            background: #333;
+            display: inline-block;
+            padding: 0.3em 0.8em;
+            border-radius: 5px;
+            margin-bottom: 0.5em;
+        }
+        .title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            font-size: 1.1rem;
+        }
+        .rating {
+            color: gold;
+            font-size: 1rem;
+            margin-bottom: 1em;
+        }
+        .desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1em;
+        }
+        .details-btn {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.5em 1.2em;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            align-self: flex-start;
+        }
+        .details-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .filters select, .filters button {
+            background: #22243a;
+            color: var(--text-light);
+            border: none;
+            border-radius: 6px;
+            padding: 0.5em 1em;
+            font-size: 1rem;
+            margin-bottom: 0.5em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .filters button.active, .filters button:hover {
+            background: var(--accent);
+            color: white;
+        }
+        .series-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .episode-list {
+            background: #18192a;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        .episode-list h4 {
+            margin: 0 0 0.5em 0;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+        .episode-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .episode-list li {
+            padding: 0.3em 0;
+            border-bottom: 1px solid #23243a;
+        }
+        .episode-list li:last-child {
+            border-bottom: none;
+        }
+        .watchlist-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5em 1em;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-left: 0.5em;
+            transition: background 0.3s;
+        }
+        .watchlist-btn:hover {
+            background: #b00710;
+        }
+        .modal-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-bg.active {
+            display: flex;
+        }
+        .modal {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            color: var(--text-light);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+            position: relative;
+        }
+        .modal .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        @media (max-width: 700px) {
+            .carousel { gap: 0.5rem; }
+            .card { min-width: 220px; }
+            .section { padding: 1rem; }
+            .hero { padding: 6rem 1rem 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Raspen series</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="peliculas.html">Películas</a>
+            <a href="series.html" class="active">Series</a>
+            <a href="favoritos.html">Favoritos</a>
+            <a href="perfil.html">Perfil</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Series</h1>
+        <p>Descubre, explora y disfruta de tus series favoritas. Filtra por género, busca por título y añade a tu lista de seguimiento. ¡Nunca fue tan fácil seguir tus historias preferidas!</p>
+    </section>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Buscar series por título, género o año...">
+    </div>
+
+    <div class="filters">
+        <select id="genreFilter">
+            <option value="">Género</option>
+            <option value="Drama">Drama</option>
+            <option value="Comedia">Comedia</option>
+            <option value="Acción">Acción</option>
+            <option value="Ciencia Ficción">Ciencia Ficción</option>
+            <option value="Animación">Animación</option>
+            <option value="Terror">Terror</option>
+            <option value="Documental">Documental</option>
+        </select>
+        <select id="yearFilter">
+            <option value="">Año</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+            <option value="2010s">2010-2019</option>
+            <option value="2000s">2000-2009</option>
+        </select>
+        <button id="clearFilters">Limpiar filtros</button>
+    </div>
+
+    <div class="tabs">
+        <button class="active" onclick="showTab('populares')">Populares</button>
+        <button onclick="showTab('nuevas')">Nuevas</button>
+        <button onclick="showTab('favoritas')">Favoritas</button>
+        <button onclick="showTab('recomendadas')">Recomendadas</button>
+    </div>
+
+    <section class="section" id="popularesTab">
+        <h2>Series Populares</h2>
+        <div class="carousel" id="popularesCarousel">
+            <!-- Cards de series populares -->
+            <div class="card">
+                <img src="img\lacasadepapel.webp" alt="Serie 1">
+                <div class="card-content">
+                    <span class="genre">Drama</span>
+                    <div class="title">La Casa de Papel</div>
+                    <div class="rating">★ 8.3</div>
+                    <div class="desc">Un grupo de criminales lleva a cabo el mayor atraco de la historia en la Fábrica Nacional de Moneda y Timbre.</div>
+                    <button class="details-btn" onclick="openModal('La Casa de Papel')">Detalles</button>
+                    <button class="watchlist-btn" onclick="addToWatchlist('La Casa de Papel')">+ Lista</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="img\strangerthings.jpg" alt="Serie 2">
+                <div class="card-content">
+                    <span class="genre">Ciencia Ficción</span>
+                    <div class="title">Stranger Things</div>
+                    <div class="rating">★ 8.7</div>
+                    <div class="desc">Un grupo de niños se enfrenta a fuerzas sobrenaturales en un pequeño pueblo de Indiana.</div>
+                    <button class="details-btn" onclick="openModal('Stranger Things')">Detalles</button>
+                    <button class="watchlist-btn" onclick="addToWatchlist('Stranger Things')">+ Lista</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://image.tmdb.org/t/p/w500/3.jpg" alt="Serie 3">
+                <div class="card-content">
+                    <span class="genre">Comedia</span>
+                    <div class="title">Brooklyn Nine-Nine</div>
+                    <div class="rating">★ 8.4</div>
+                    <div class="desc">Un grupo de detectives excéntricos resuelve crímenes en Brooklyn con mucho humor.</div>
+                    <button class="details-btn" onclick="openModal('Brooklyn Nine-Nine')">Detalles</button>
+                    <button class="watchlist-btn" onclick="addToWatchlist('Brooklyn Nine-Nine')">+ Lista</button>
+                </div>
+            </div>
+            <!-- Más cards... -->
+        </div>
+    </section>
+
+    <section class="section" id="nuevasTab" style="display:none;">
+        <h2>Nuevas Series</h2>
+        <div class="carousel" id="nuevasCarousel">
+            <div class="card">
+                <img src="https://image.tmdb.org/t/p/w500/4.jpg" alt="Serie 4">
+                <div class="card-content">
+                    <span class="genre">Drama</span>
+                    <div class="title">The Last of Us</div>
+                    <div class="rating">★ 9.1</div>
+                    <div class="desc">En un mundo postapocalíptico, Joel y Ellie luchan por sobrevivir y encontrar esperanza.</div>
+                    <button class="details-btn" onclick="openModal('The Last of Us')">Detalles</button>
+                    <button class="watchlist-btn" onclick="addToWatchlist('The Last of Us')">+ Lista</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://image.tmdb.org/t/p/w500/5.jpg" alt="Serie 5">
+                <div class="card-content">
+                    <span class="genre">Animación</span>
+                    <div class="title">Arcane</div>
+                    <div class="rating">★ 9.0</div>
+                    <div class="desc">La rivalidad entre dos hermanas y el conflicto entre ciudades en el universo de League of Legends.</div>
+                    <button class="details-btn" onclick="openModal('Arcane')">Detalles</button>
+                    <button class="watchlist-btn" onclick="addToWatchlist('Arcane')">+ Lista</button>
+                </div>
+            </div>
+            <!-- Más cards... -->
+        </div>
+    </section>
+
+    <section class="section" id="favoritasTab" style="display:none;">
+        <h2>Mis Series Favoritas</h2>
+        <div class="series-list" id="favoritasList">
+            <!-- Aquí se mostrarán las series favoritas del usuario -->
+            <div style="color:var(--text-muted);text-align:center;">No tienes series favoritas aún.</div>
+        </div>
+    </section>
+
+    <section class="section" id="recomendadasTab" style="display:none;">
+        <h2>Recomendadas para ti</h2>
+        <div class="series-list" id="recomendadasList">
+            <div class="card">
+                <img src="https://image.tmdb.org/t/p/w500/6.jpg" alt="Serie 6">
+                <div class="card-content">
+                    <span class="genre">Acción</span>
+                    <div class="title">The Boys</div>
+                    <div class="rating">★ 8.8</div>
+                    <div class="desc">Un grupo de vigilantes combate a superhéroes corruptos en un mundo donde abusan de sus poderes.</div>
+                    <button class="details-btn" onclick="openModal('The Boys')">Detalles</button>
+                    <button class="watchlist-btn" onclick="addToWatchlist('The Boys')">+ Lista</button>
+                </div>
+            </div>
+            <!-- Más cards... -->
+        </div>
+    </section>
+
+    <!-- Modal de detalles de serie -->
+    <div class="modal-bg" id="modalBg">
+        <div class="modal" id="modalContent">
+            <button class="close" onclick="closeModal()">&times;</button>
+            <div id="modalBody">
+                <!-- Detalles de la serie aquí -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; Media center 2023. Todos los derechos reservados.
+    </footer>
+
+    <script>
+        // Tabs
+        function showTab(tab) {
+            document.getElementById('popularesTab').style.display = tab === 'populares' ? '' : 'none';
+            document.getElementById('nuevasTab').style.display = tab === 'nuevas' ? '' : 'none';
+            document.getElementById('favoritasTab').style.display = tab === 'favoritas' ? '' : 'none';
+            document.getElementById('recomendadasTab').style.display = tab === 'recomendadas' ? '' : 'none';
+            document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+            if(tab === 'populares') document.querySelectorAll('.tabs button')[0].classList.add('active');
+            if(tab === 'nuevas') document.querySelectorAll('.tabs button')[1].classList.add('active');
+            if(tab === 'favoritas') document.querySelectorAll('.tabs button')[2].classList.add('active');
+            if(tab === 'recomendadas') document.querySelectorAll('.tabs button')[3].classList.add('active');
+        }
+
+        // Modal de detalles
+        const seriesDetails = {
+            "La Casa de Papel": {
+                img: "https://image.tmdb.org/t/p/w500/1.jpg",
+                title: "La Casa de Papel",
+                genre: "Drama",
+                rating: "8.3",
+                desc: "Un grupo de criminales lleva a cabo el mayor atraco de la historia en la Fábrica Nacional de Moneda y Timbre.",
+                episodes: [
+                    "S1E1: El plan comienza",
+                    "S1E2: Refuerzos",
+                    "S1E3: La estrategia",
+                    "S1E4: El golpe"
+                ]
+            },
+            "Stranger Things": {
+                img: "https://image.tmdb.org/t/p/w500/2.jpg",
+                title: "Stranger Things",
+                genre: "Ciencia Ficción",
+                rating: "8.7",
+                desc: "Un grupo de niños se enfrenta a fuerzas sobrenaturales en un pequeño pueblo de Indiana.",
+                episodes: [
+                    "S1E1: La desaparición de Will Byers",
+                    "S1E2: La chica rara",
+                    "S1E3: Luces de Navidad"
+                ]
+            },
+            "Brooklyn Nine-Nine": {
+                img: "https://image.tmdb.org/t/p/w500/3.jpg",
+                title: "Brooklyn Nine-Nine",
+                genre: "Comedia",
+                rating: "8.4",
+                desc: "Un grupo de detectives excéntricos resuelve crímenes en Brooklyn con mucho humor.",
+                episodes: [
+                    "S1E1: Piloto",
+                    "S1E2: El tagger",
+                    "S1E3: El Slump"
+                ]
+            },
+            "The Last of Us": {
+                img: "https://image.tmdb.org/t/p/w500/4.jpg",
+                title: "The Last of Us",
+                genre: "Drama",
+                rating: "9.1",
+                desc: "En un mundo postapocalíptico, Joel y Ellie luchan por sobrevivir y encontrar esperanza.",
+                episodes: [
+                    "S1E1: Cuando estés perdido en la oscuridad",
+                    "S1E2: Infectados"
+                ]
+            },
+            "Arcane": {
+                img: "https://image.tmdb.org/t/p/w500/5.jpg",
+                title: "Arcane",
+                genre: "Animación",
+                rating: "9.0",
+                desc: "La rivalidad entre dos hermanas y el conflicto entre ciudades en el universo de League of Legends.",
+                episodes: [
+                    "S1E1: Bienvenidos a Piltover",
+                    "S1E2: Algunos misterios son mejores sin resolver"
+                ]
+            },
+            "The Boys": {
+                img: "https://image.tmdb.org/t/p/w500/6.jpg",
+                title: "The Boys",
+                genre: "Acción",
+                rating: "8.8",
+                desc: "Un grupo de vigilantes combate a superhéroes corruptos en un mundo donde abusan de sus poderes.",
+                episodes: [
+                    "S1E1: La regla del juego",
+                    "S1E2: El chico de la costa"
+                ]
+            }
+        };
+
+        function openModal(serie) {
+            const s = seriesDetails[serie];
+            if (!s) return;
+            document.getElementById('modalBody').innerHTML = `
+                <img src="${s.img}" alt="${s.title}" style="width:100%;border-radius:8px;margin-bottom:1em;">
+                <div style="font-size:1.3rem;font-weight:bold;">${s.title}</div>
+                <div class="genre">${s.genre}</div>
+                <div class="rating">★ ${s.rating}</div>
+                <div class="desc">${s.desc}</div>
+                <div class="episode-list">
+                    <h4>Episodios destacados</h4>
+                    <ul>
+                        ${s.episodes.map(e => `<li>${e}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            document.getElementById('modalBg').classList.add('active');
+        }
+        function closeModal() {
+            document.getElementById('modalBg').classList.remove('active');
+        }
+        window.onclick = function(e) {
+            if (e.target === document.getElementById('modalBg')) closeModal();
+        }
+
+        // Watchlist (favoritos)
+        let watchlist = JSON.parse(localStorage.getItem('watchlistSeries') || '[]');
+        function addToWatchlist(serie) {
+            if (!watchlist.includes(serie)) {
+                watchlist.push(serie);
+                localStorage.setItem('watchlistSeries', JSON.stringify(watchlist));
+                updateFavoritas();
+                alert('Serie añadida a tu lista de favoritos.');
+            }
+        }
+        function updateFavoritas() {
+            const cont = document.getElementById('favoritasList');
+            if (!watchlist.length) {
+                cont.innerHTML = '<div style="color:var(--text-muted);text-align:center;">No tienes series favoritas aún.</div>';
+                return;
+            }
+            cont.innerHTML = watchlist.map(serie => {
+                const s = seriesDetails[serie];
+                if (!s) return '';
+                return `
+                    <div class="card">
+                        <img src="${s.img}" alt="${s.title}">
+                        <div class="card-content">
+                            <span class="genre">${s.genre}</span>
+                            <div class="title">${s.title}</div>
+                            <div class="rating">★ ${s.rating}</div>
+                            <div class="desc">${s.desc}</div>
+                            <button class="details-btn" onclick="openModal('${s.title}')">Detalles</button>
+                            <button class="watchlist-btn" onclick="removeFromWatchlist('${s.title}')">Quitar</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        function removeFromWatchlist(serie) {
+            watchlist = watchlist.filter(s => s !== serie);
+            localStorage.setItem('watchlistSeries', JSON.stringify(watchlist));
+            updateFavoritas();
+        }
+        updateFavoritas();
+
+        // Filtros y búsqueda
+        document.getElementById('clearFilters').onclick = function() {
+            document.getElementById('genreFilter').value = '';
+            document.getElementById('yearFilter').value = '';
+            document.getElementById('searchInput').value = '';
+            // Aquí podrías recargar la lista de series si fuera dinámica
+        };
+
+        // (Opcional) Puedes agregar lógica para filtrar y buscar series si tienes una lista dinámica
+
+    </script>
+</body>
+</html>
